@@ -14,13 +14,20 @@ namespace PlayerSample
         {
             _waveOutEvent = waveOutEvent;
             _mp3FileReader = mp3FileReader;
+            CreatePlayer();
+        }
+
+        public void CreatePlayer()
+        {
+            Console.WriteLine("Creating player");
+            CheckIfDisposed();
+            _waveOutEvent.Init(_mp3FileReader);
         }
 
         public void PlayMusic()
         {
             Console.WriteLine("Playing music");
             CheckIfDisposed();
-            _waveOutEvent.Init(_mp3FileReader);
             _waveOutEvent.Play();
         }
 
@@ -28,7 +35,6 @@ namespace PlayerSample
         {
             Console.WriteLine("Stopping music");
             _waveOutEvent.Stop();
-            Dispose();
         }
 
         public void Dispose()
