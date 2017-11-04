@@ -10,10 +10,10 @@ namespace PlayerSample
         private bool _isDisposedWaveOutEvent;
         private bool _isDisposedMp3FileReader;
 
-        public MusicManager(WaveOutEvent waveOutEvent, Mp3FileReader mp3FileReader)
+        public MusicManager()
         {
-            _waveOutEvent = waveOutEvent;
-            _mp3FileReader = mp3FileReader;
+            _waveOutEvent = new WaveOutEvent();
+            _mp3FileReader = new Mp3FileReader("Mozart.mp3");
             CreatePlayer();
         }
 
@@ -35,6 +35,7 @@ namespace PlayerSample
         {
             Console.WriteLine("Stopping music");
             _waveOutEvent.Stop();
+            _waveOutEvent.Dispose();
         }
 
         public void Dispose()

@@ -11,7 +11,7 @@ namespace PlayerSample
     {
         static void Main(string[] args)
         {
-            MusicManager musicManager = new MusicManager(new WaveOutEvent(), new Mp3FileReader("Mozart.mp3"));
+            MusicManager musicManager = new MusicManager();
             musicManager.CreatePlayer();
             musicManager.PlayMusic();
             
@@ -20,7 +20,6 @@ namespace PlayerSample
             if (command == "stop")
             {
                 musicManager.StopMusic();
-                musicManager.Dispose();
             }
             Console.WriteLine("Write play to play music");
             var playCommand = Console.ReadLine();
