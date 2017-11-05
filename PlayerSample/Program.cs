@@ -11,7 +11,7 @@ namespace PlayerSample
     {
         static void Main(string[] args)
         {
-            MusicManager musicManager = new MusicManager();
+            MusicPlayer musicManager = new MusicPlayer();
             musicManager.CreatePlayer();
             musicManager.PlayMusic();
             
@@ -27,8 +27,8 @@ namespace PlayerSample
             {
                 musicManager.PlayMusic();
             }
-            Console.ReadKey();
 
+            Console.ReadKey();
         }
     }
 }
