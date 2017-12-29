@@ -10,14 +10,20 @@ namespace PlayerSample
 {
     class Program
     {
+        private const string StopCommand = "Stop";
+        private const string PlayCommand = "Play";
+        private const int MusicFromPathOption = 1;
+        private const int MusicFromBytesOption = 2;
+        private const int MusicFromStreamOption = 3;
+
         static void Main(string[] args)
         {
             int userInput;
             do
             {
-                userInput = ShowMenu();
-                var x = userInput == 1;
-            } while (userInput != 1 && userInput != 2 && userInput != 3);
+                userInput = GetChosenPlayerOption();
+            } while (userInput != MusicFromPathOption && userInput != MusicFromBytesOption 
+                    && userInput != MusicFromStreamOption);
 
             var path = GetPath();
 
@@ -42,15 +48,15 @@ namespace PlayerSample
             }
             musicManager.PlayMusic();
 
-            Console.WriteLine("if you want to stop music write: stop");
+            Console.WriteLine($"If you want to stop music write: {StopCommand}");
             var command = Console.ReadLine();
-            if (command == "stop")
+            if (command == StopCommand)
             {
                 musicManager.StopMusic();
             }
-            Console.WriteLine("Write play to play music");
+            Console.WriteLine($"If you want to play music write: {PlayCommand}");
             var playCommand = Console.ReadLine();
-            if (playCommand == "play")
+            if (playCommand == PlayCommand)
             {
                 musicManager.PlayMusic();
             }
@@ -58,15 +64,15 @@ namespace PlayerSample
             Console.ReadKey();
         }
 
-        private static int ShowMenu()
+        private static int GetChosenPlayerOption()
         {
             Console.WriteLine("Check your option: ");
-            Console.WriteLine("1 - Play from path");
-            Console.WriteLine("2 - Play from byte array");
-            Console.WriteLine("3 - Play from stream");
+            Console.WriteLine($"{MusicFromPathOption} - Play from path");
+            Console.WriteLine($"{MusicFromBytesOption} - Play from byte array");
+            Console.WriteLine($"{MusicFromStreamOption} - Play from stream");
             var chosenOption = Console.ReadLine();
             int result;
-            var option = Int32.TryParse(chosenOption, out result);
+            Int32.TryParse(chosenOption, out result);
             return result;
         }
 

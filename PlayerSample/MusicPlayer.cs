@@ -21,24 +21,24 @@ namespace PlayerSample
 
         public void PlayMusicFromPath(string path)
         {
+            CheckIfDisposed();
             _audioFileReader = new AudioFileReader(path);
             _isPlayingFromFile = true;
-            CheckIfDisposed();
             _waveOutEvent.Init(_audioFileReader);
         }
 
         public void PlayMusicFromBytes(byte[] audiobyte)
         {
+            CheckIfDisposed();
             _provider = new RawSourceWaveStream(
                 new MemoryStream(audiobyte), new WaveFormat());
-            CheckIfDisposed();
             _waveOutEvent.Init(_provider);
         }
 
         public void PlayMusicFromStream(Stream stream)
         {
-            _streamProvider = new RawSourceWaveStream(stream, new WaveFormat());
             CheckIfDisposed();
+            _streamProvider = new RawSourceWaveStream(stream, new WaveFormat());
             _waveOutEvent.Init(_streamProvider);
         }
 
