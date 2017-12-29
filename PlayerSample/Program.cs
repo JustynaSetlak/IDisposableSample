@@ -30,14 +30,14 @@ namespace PlayerSample
             MusicPlayer musicManager = new MusicPlayer();
             switch (userInput)
             {
-                case 1:
+                case MusicFromPathOption:
                     musicManager.PlayMusicFromPath(path);
                     break;
-                case 2:
+                case MusicFromBytesOption:
                     byte[] audiobyte = File.ReadAllBytes(path);
                     musicManager.PlayMusicFromBytes(audiobyte);
                     break;
-                case 3:
+                case MusicFromStreamOption:
                     byte[] bytes = File.ReadAllBytes(path);
                     Stream stream = new MemoryStream(bytes);
                     musicManager.PlayMusicFromStream(stream);
