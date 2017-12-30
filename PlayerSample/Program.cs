@@ -10,11 +10,11 @@ namespace PlayerSample
 {
     class Program
     {
-        private const string StopCommand = "Stop";
-        private const string PlayCommand = "Play";
-        private const int MusicFromPathOption = 1;
-        private const int MusicFromBytesOption = 2;
-        private const int MusicFromStreamOption = 3;
+        private const string STOP_COMMAND = "Stop";
+        private const string PLAY_COMMAND = "Play";
+        private const int MUSIC_FROM_PATH_OPTION = 1;
+        private const int MUSIC_FROM_BYTES_OPTION = 2;
+        private const int MUSIC_FROM_STREAM_OPTION = 3;
 
         static void Main(string[] args)
         {
@@ -22,22 +22,22 @@ namespace PlayerSample
             do
             {
                 userInput = GetChosenPlayerOption();
-            } while (userInput != MusicFromPathOption && userInput != MusicFromBytesOption 
-                    && userInput != MusicFromStreamOption);
+            } while (userInput != MUSIC_FROM_PATH_OPTION && userInput != MUSIC_FROM_BYTES_OPTION 
+                    && userInput != MUSIC_FROM_STREAM_OPTION);
 
             var path = GetPath();
 
             MusicPlayer musicManager = new MusicPlayer();
             switch (userInput)
             {
-                case MusicFromPathOption:
+                case MUSIC_FROM_PATH_OPTION:
                     musicManager.PlayMusicFromPath(path);
                     break;
-                case MusicFromBytesOption:
+                case MUSIC_FROM_BYTES_OPTION:
                     byte[] audiobyte = File.ReadAllBytes(path);
                     musicManager.PlayMusicFromBytes(audiobyte);
                     break;
-                case MusicFromStreamOption:
+                case MUSIC_FROM_STREAM_OPTION:
                     byte[] bytes = File.ReadAllBytes(path);
                     Stream stream = new MemoryStream(bytes);
                     musicManager.PlayMusicFromStream(stream);
@@ -48,15 +48,15 @@ namespace PlayerSample
             }
             musicManager.PlayMusic();
 
-            Console.WriteLine($"If you want to stop music write: {StopCommand}");
+            Console.WriteLine($"If you want to stop music write: {STOP_COMMAND}");
             var command = Console.ReadLine();
-            if (command == StopCommand)
+            if (command == STOP_COMMAND)
             {
                 musicManager.StopMusic();
             }
-            Console.WriteLine($"If you want to play music write: {PlayCommand}");
+            Console.WriteLine($"If you want to play music write: {PLAY_COMMAND}");
             var playCommand = Console.ReadLine();
-            if (playCommand == PlayCommand)
+            if (playCommand == PLAY_COMMAND)
             {
                 musicManager.PlayMusic();
             }
@@ -67,12 +67,11 @@ namespace PlayerSample
         private static int GetChosenPlayerOption()
         {
             Console.WriteLine("Check your option: ");
-            Console.WriteLine($"{MusicFromPathOption} - Play from path");
-            Console.WriteLine($"{MusicFromBytesOption} - Play from byte array");
-            Console.WriteLine($"{MusicFromStreamOption} - Play from stream");
+            Console.WriteLine($"{MUSIC_FROM_PATH_OPTION} - Play from path");
+            Console.WriteLine($"{MUSIC_FROM_BYTES_OPTION} - Play from byte array");
+            Console.WriteLine($"{MUSIC_FROM_STREAM_OPTION} - Play from stream");
             var chosenOption = Console.ReadLine();
-            int result;
-            Int32.TryParse(chosenOption, out result);
+            Int32.TryParse(chosenOption, out int result);
             return result;
         }
 
