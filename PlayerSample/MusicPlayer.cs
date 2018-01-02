@@ -13,6 +13,7 @@ namespace PlayerSample
         private bool _isDisposedWaveOutEvent;
         private bool _isDisposedAudioFileReader;
         private bool _isPlayingFromFile;
+        private bool _isPlayerInitted;
 
         public MusicPlayer()
         {
@@ -25,6 +26,7 @@ namespace PlayerSample
             _audioFileReader = new AudioFileReader(path);
             _isPlayingFromFile = true;
             _waveOutEvent.Init(_audioFileReader);
+            _isPlayerInitted = true;
         }
 
         public void PlayMusicFromBytes(byte[] audiobyte)
@@ -33,6 +35,7 @@ namespace PlayerSample
             _provider = new RawSourceWaveStream(
                 new MemoryStream(audiobyte), new WaveFormat());
             _waveOutEvent.Init(_provider);
+            _isPlayerInitted = true;
         }
 
         public void PlayMusicFromStream(Stream stream)
@@ -40,19 +43,24 @@ namespace PlayerSample
             CheckIfDisposed();
             _streamProvider = new RawSourceWaveStream(stream, new WaveFormat());
             _waveOutEvent.Init(_streamProvider);
+            _isPlayerInitted = true;
         }
 
-        public void PlayMusic()
+        public bool PlayMusic()
         {
-            CheckIfDisposed();
-            _waveOutEvent.Play();
+            if (_isPlayerInitted)
+            {
+                CheckIfDisposed();
+                _waveOutEvent.Play();
+                return true;
+            }
+            return false;
         }
 
         public void StopMusic()
         {
             CheckIfDisposed();
             _waveOutEvent.Stop();
-            Dispose();
         }
 
         public void Dispose()

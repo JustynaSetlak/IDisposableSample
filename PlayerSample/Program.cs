@@ -18,6 +18,12 @@ namespace PlayerSample
 
         static void Main(string[] args)
         {
+            MusicPlayer musicManager = new MusicPlayer();
+            var resultOfPlaying = musicManager.PlayMusic();
+            if (!resultOfPlaying)
+            {
+                Console.WriteLine("Player is not initialised");
+            }
             int userInput;
             do
             {
@@ -27,7 +33,6 @@ namespace PlayerSample
 
             var path = GetPath();
 
-            MusicPlayer musicManager = new MusicPlayer();
             switch (userInput)
             {
                 case MUSIC_FROM_PATH_OPTION:
@@ -59,7 +64,12 @@ namespace PlayerSample
             if (playCommand == PLAY_COMMAND)
             {
                 musicManager.PlayMusic();
+                musicManager.PlayMusic();
             }
+
+            musicManager.Dispose();
+            musicManager.PlayMusic();
+
 
             Console.ReadKey();
         }
