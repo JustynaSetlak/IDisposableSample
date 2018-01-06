@@ -7,8 +7,6 @@ namespace PlayerSample
     public class MusicPlayer : IDisposable
     {
         private readonly WaveOutEvent _waveOutEvent;
-        private IWaveProvider _provider;
-        private IWaveProvider _streamProvider;
         private AudioFileReader _audioFileReader;
         private bool _isDisposedWaveOutEvent;
         private bool _isDisposedAudioFileReader;
@@ -20,33 +18,46 @@ namespace PlayerSample
             _waveOutEvent = new WaveOutEvent();
         }
 
-        public void PlayMusicFromPath(string path)
+        public void Load()
         {
             CheckIfDisposed();
-            _audioFileReader = new AudioFileReader(path);
+        }
+
+        public void Load(string path)
+        {
+            CheckIfDisposed();
             _isPlayingFromFile = true;
-            _waveOutEvent.Init(_audioFileReader);
-            _isPlayerInitted = true;
+            _audioFileReader = new AudioFileReader(path);
+            InitPlayer(_audioFileReader);
         }
 
-        public void PlayMusicFromBytes(byte[] audiobyte)
+        public void Load(byte[] audiobyte)
         {
             CheckIfDisposed();
-            _provider = new RawSourceWaveStream(
-                new MemoryStream(audiobyte), new WaveFormat());
-            _waveOutEvent.Init(_provider);
-            _isPlayerInitted = true;
+            var provider = CreateProvider(new MemoryStream(audiobyte));
+            InitPlayer(provider);
         }
 
-        public void PlayMusicFromStream(Stream stream)
+        public void Load(Stream stream)
         {
             CheckIfDisposed();
-            _streamProvider = new RawSourceWaveStream(stream, new WaveFormat());
-            _waveOutEvent.Init(_streamProvider);
+            var provider = CreateProvider(stream);
+            InitPlayer(provider);
+        }
+
+        private RawSourceWaveStream CreateProvider(Stream stream)
+        {
+            var provider = new RawSourceWaveStream(stream, new WaveFormat());
+            return provider;
+        }
+
+        private void InitPlayer(IWaveProvider provider)
+        {
+            _waveOutEvent.Init(provider);
             _isPlayerInitted = true;
         }
 
-        public bool PlayMusic()
+        public bool Play()
         {
             if (_isPlayerInitted)
             {
@@ -57,7 +68,7 @@ namespace PlayerSample
             return false;
         }
 
-        public void StopMusic()
+        public void Stop()
         {
             CheckIfDisposed();
             _waveOutEvent.Stop();
