@@ -18,11 +18,6 @@ namespace PlayerSample
             _waveOutEvent = new WaveOutEvent();
         }
 
-        public void Load()
-        {
-            CheckIfDisposed();
-        }
-
         public void Load(string path)
         {
             CheckIfDisposed();
